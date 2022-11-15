@@ -19,10 +19,10 @@ export class InfraStack extends cdk.Stack {
     const vpc1 = new ec2.Vpc(this, 'vpc1', {
       cidr: '10.0.0.0/16', // address range: 10.0.0.0 - 10.0.255.255
       natGateways: 1,
-      natGatewayProvider: ec2.NatProvider.instance({
-        instanceType: new InstanceType('t3.nano'),
-        machineImage: new NatInstanceImage(),
-      }),
+      //natGatewayProvider: ec2.NatProvider.instance({
+      //  instanceType: new InstanceType('t3.nano'),
+      //  machineImage: new NatInstanceImage(),
+      //}),
       subnetConfiguration: [
         {
           name: 'Public',
@@ -41,10 +41,10 @@ export class InfraStack extends cdk.Stack {
     const vpc2 = new ec2.Vpc(this, 'vpc2', {
       cidr: '10.1.0.0/16', // address range: 10.1.0.0 - 10.1.255.255
       natGateways: 1,
-      natGatewayProvider: ec2.NatProvider.instance({
-        instanceType: new InstanceType('t3.nano'),
-        machineImage: new NatInstanceImage(),
-      }),
+      //natGatewayProvider: ec2.NatProvider.instance({
+      //  instanceType: new InstanceType('t3.nano'),
+      //  machineImage: new NatInstanceImage(),
+      //}),
       subnetConfiguration: [
         {
           name: 'Public',
@@ -106,8 +106,9 @@ export class InfraStack extends cdk.Stack {
       instanceType: new ec2.InstanceType('t3.nano'), // 1 Core, 1 GB
 //    machineImage: ec2.MachineImage.genericLinux({'us-west-2': 'ami-XXXXXXXXXXXXXXXXX'}),
       machineImage: new ec2.AmazonLinuxImage({
-        generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX,
+        generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
         edition: ec2.AmazonLinuxEdition.STANDARD,
+        cpuType: ec2.AmazonLinuxCpuType.X86_64,
         virtualization: ec2.AmazonLinuxVirt.HVM,
         storage: ec2.AmazonLinuxStorage.GENERAL_PURPOSE,
       }),
@@ -134,8 +135,9 @@ export class InfraStack extends cdk.Stack {
       instanceType: new ec2.InstanceType('t3.nano'), // 1 Core, 1 GB
 //    machineImage: ec2.MachineImage.genericLinux({'us-west-2': 'ami-XXXXXXXXXXXXXXXXX'}),
       machineImage: new ec2.AmazonLinuxImage({
-        generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX,
+        generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
         edition: ec2.AmazonLinuxEdition.STANDARD,
+        cpuType: ec2.AmazonLinuxCpuType.X86_64,
         virtualization: ec2.AmazonLinuxVirt.HVM,
         storage: ec2.AmazonLinuxStorage.GENERAL_PURPOSE,
       }),
