@@ -71,3 +71,8 @@ curl localhost
 - 参考:
   - [Transit Gatewayを利用してVPC間で通信してみた](https://dev.classmethod.jp/articles/transit-gateway-vpc/)
 
+
+## Transit Gateway の構築
+
+
+
