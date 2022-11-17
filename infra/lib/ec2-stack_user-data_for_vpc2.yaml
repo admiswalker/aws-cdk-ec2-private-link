@@ -1,6 +1,4 @@
 #cloud-config
-cloud_final_modules:
-  - [users-groups, always]
 users:
   - default
   - name: admis
@@ -11,6 +9,6 @@ users:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGsHMbqflou/Pow660rnIJq8wdtCnoJhzZfh6BAOWrxQ admis@admis-MS-7A34
 
 runcmd:
-  - amazon-linux-extras install nginx1 -y
-  - systemctl start nginx
-  - systemctl enable nginx
+  - sudo amazon-linux-extras install nginx1 -y
+  - sudo systemctl start nginx
+  - sudo systemctl enable nginx

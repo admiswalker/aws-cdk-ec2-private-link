@@ -94,7 +94,7 @@ export class InfraStack extends cdk.Stack {
     vpc2.addInterfaceEndpoint('InterfaceEndpoint_ssm_messages', {
       service: ec2.InterfaceVpcEndpointAwsService.SSM_MESSAGES,
     });
-    
+    /*
     // EC2 on VPC1
     const cloud_config_for_vpc1 = ec2.UserData.forLinux({shebang: ''})
     const user_data_script_for_vpc1 = fs.readFileSync('./lib/ec2-stack_user-data_for_vpc1.yaml', 'utf8');
@@ -123,11 +123,12 @@ export class InfraStack extends cdk.Stack {
       role: iam_role_for_ssm_for_vpc1,
       userData: multipartUserData_for_vpc1,
     });
-
+    //*/
+    //*
     // EC2 on VPC2
     const cloud_config_for_vpc2 = ec2.UserData.forLinux({shebang: ''})
     const user_data_script_for_vpc2 = fs.readFileSync('./lib/ec2-stack_user-data_for_vpc2.yaml', 'utf8');
-    cloud_config_for_vpc2.addCommands(user_data_script_for_vpc1)
+    cloud_config_for_vpc2.addCommands(user_data_script_for_vpc2)
     const multipartUserData_for_vpc2 = new ec2.MultipartUserData();
     multipartUserData_for_vpc2.addPart(ec2.MultipartBody.fromUserData(cloud_config_for_vpc2, 'text/cloud-config; charset="utf8"'));
     
@@ -152,6 +153,7 @@ export class InfraStack extends cdk.Stack {
       role: iam_role_for_ssm_for_vpc2,
       userData: multipartUserData_for_vpc2,
     });
+    //*/
 
     //---
   }
