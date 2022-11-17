@@ -55,6 +55,9 @@ curl localhost
 
 - 合計: 0.0325 USD/h -> (0.0325*140*24*30=) 3276 円/月
 
+> エンドポイントサービスの作成にはNLBの関連付けが必須となりますのでご注意ください。
+> ref: [AWS PrivateLinkの使い方と注意点 ～VPCピアリングとの使い分け～](https://devlog.arksystems.co.jp/2018/05/11/4896/)
+
 - 参考:
   - [VPC間のAWS PrivateLinkを試してみた](https://dev.classmethod.jp/articles/tried-aws-privatelink-between-vpcs/)
   - [【初心者】AWS PrivateLink を使ってみる](https://qiita.com/mksamba/items/20903940b8b256ef2487)
