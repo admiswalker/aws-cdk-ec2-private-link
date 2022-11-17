@@ -10,3 +10,7 @@ users:
     ssh-authorized-keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGsHMbqflou/Pow660rnIJq8wdtCnoJhzZfh6BAOWrxQ admis@admis-MS-7A34
 
+runcmd:
+  - amazon-linux-extras install nginx1 -y
+  - systemctl start nginx
+  - systemctl enable nginx
