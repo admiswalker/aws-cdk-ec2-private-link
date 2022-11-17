@@ -1,4 +1,4 @@
-# aws-cdk-ec2-private-link
+# aws-cdk-ec2-transit-gateway
 
 ## AWS CDK プロジェクトの初期化
 
