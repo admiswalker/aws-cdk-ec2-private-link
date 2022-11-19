@@ -153,6 +153,44 @@ export class InfraStack extends cdk.Stack {
       userData: multipartUserData_for_vpc2,
     });
 
+    // Transit Gateway
+    const cfnTransitGateway = new ec2.CfnTransitGateway(this, 'CfnTransitGateway', {});
+    const cfnTransitGatewayRouteTable = new ec2.CfnTransitGatewayRouteTable(this, 'CfnTransitGatewayRouteTable', {
+      transitGatewayId: cfnTransitGateway.attrId,
+    });
+    const cfnTransitGatewayAttachment_for_vpc1 = new ec2.CfnTransitGatewayAttachment(this, 'CfnTransitGatewayAttachment_for_vpc1', {
+      transitGatewayId: cfnTransitGateway.attrId,
+      vpcId: vpc1.vpcId,
+      subnetIds: vpc1.selectSubnets({subnetGroupName: 'Private'}).subnetIds,
+    });
+    const cfnTransitGatewayAttachment_for_vpc2 = new ec2.CfnTransitGatewayAttachment(this, 'CfnTransitGatewayAttachment_for_vpc2', {
+      transitGatewayId: cfnTransitGateway.attrId,
+      vpcId: vpc2.vpcId,
+      subnetIds: vpc2.selectSubnets({subnetGroupName: 'Private'}).subnetIds,
+    });
+    
+    vpc1.privateSubnets.map((iSubnet: ec2.ISubnet, index: number) => { // allow packet from VPC1 to VPC2
+      new ec2.CfnRoute(this, `Vpc1Route${index}`, {
+        routeTableId: iSubnet.routeTable.routeTableId,
+        destinationCidrBlock: vpc2.vpcCidrBlock,
+        transitGatewayId: cfnTransitGateway.attrId,
+      });
+    });
+    vpc2.privateSubnets.map((iSubnet: ec2.ISubnet, index: number) => { // allow packet from VPC2 to VPC1
+      new ec2.CfnRoute(this, `Vpc2Route${index}`, {
+        routeTableId: iSubnet.routeTable.routeTableId,
+        destinationCidrBlock: vpc1.vpcCidrBlock,
+        transitGatewayId: cfnTransitGateway.attrId,
+      });
+    });
+    
+    const ec2_instance_on_vpc2_sg = new ec2.SecurityGroup(this, 'ec2_instance_on_vpc2_sg', {
+      vpc: vpc2,
+      allowAllOutbound: true,
+    })
+    ec2_instance_on_vpc2_sg.connections.allowFrom(ec2.Peer.ipv4(vpc1.vpcCidrBlock.toString()), ec2.Port.tcp(80), 'Allow access from vpc1')
+    ec2_instance_on_vpc2.addSecurityGroup(ec2_instance_on_vpc2_sg);
+    
     //---
   }
 }
